@@ -1,0 +1,300 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage[most]{tcolorbox} 
+\usepackage{xcolor}[dvipnames]
+\usepackage{dutchcal}
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+
+% commands for theorems, colors, and letters
+
+% theorems
+\newtheorem*{theorem*}{Theorem}
+\newtheorem*{definition*}{Definition}
+\newtheorem*{example*}{Example}
+\newtheorem*{nonex*}{Nonexample}
+\newtheorem*{claim*}{Claim}
+\newtheorem*{prop*}{Prop}
+
+% colors
+\definecolor{definition}{HTML}{517be2}
+\definecolor{example}{HTML}{76c893}
+\definecolor{nonex}{HTML}{ea3469}
+\definecolor{theorem}{HTML}{fab025}
+\definecolor{claim}{HTML}{ffe66d}
+\definecolor{prop}{HTML}{6247aa}
+
+% caligraphy font
+\newcommand{\B}{\mathcal{B}}
+
+\title{Point-Set Topology}
+\author{Yahir Yanez}
+\date{May 2025}
+
+\begin{document}
+\begin{center}
+    \vspace*{\fill}
+    \Huge Notes for Point-Set Topology \\
+    \Huge MATH 320 \\
+    \vspace{10mm}
+    \LARGE Yahir Yanez-Sierra \\
+    \vspace{2mm}
+    \LARGE Spring 2025
+    \vspace*{\fill}
+\end{center}
+\newpage
+
+\section*{Topological Spaces}
+\begin{tcolorbox}[colback=definition!65]
+    \begin{definition*}
+        A \textbf{topological space} on a set $X$ is a family of subsets $\mathcal{T}$ so that the following hold:
+        \begin{enumerate}
+            \item[(i)] $\emptyset, X \in \mathcal{T}$ (The empty set and the set $X$ are open)
+            \item[(ii)] If $A_\alpha \in \mathcal{T}$ for $\alpha \in I$, then $\bigcup_{\alpha \in I} A_\alpha \in \mathcal{T}$ (Arbitrary union of open sets are open)
+            \item[(iii)] If $A_1, A_2, ..., A_n \in \mathcal{T}$ for $i = 1, 2, ..., n$, then $\bigcap^{n}_{\alpha \in I} A_\alpha \in \mathcal{T}$ (Finite intersection of open sets are open)
+        \end{enumerate}
+    \end{definition*}
+    \textbf{Notice:} Since $\mathcal{T}$ is a collection of subsets, $\mathcal{T} \subseteq \mathcal{P}(X)$
+\end{tcolorbox}
+
+A topology on any set $X$ is nothing more than just a set that follows some kind of characteristics and properties to make sure the elements are closed under that same topology. You can recall back to \textit{vector spaces} and \textit{metric spaces} which are also other special sets that follow their own properties in order to stay within the same set. \\
+
+\textbf{Notice:} $(X, \mathcal{T})$ is pair of objects that are called a \textit{topological space}
+
+\begin{tcolorbox}[colback=example!65]
+    \begin{example*}
+        Let $X$ be any nonempty set. The collection of sets $\{\emptyset, X\}$ is the topology on the set X, called the \textbf{indiscrete topology} or \textbf{trivial topology}. The power set of $\mathcal{P}(X)$, is the collection of subsets of $X$, is also a topology on the set $X$, called the \textbf{discrete topology}.
+    \end{example*}
+\end{tcolorbox}
+
+\newpage
+
+Here are some things to remind ourselves first about functions
+\begin{tcolorbox}[colback=definition!65]
+   A function is said to be \textit{one-one} if $f(a) = f(b)$ then, $a = b$ \\
+   Equivalently,
+   $a \neq b$ the, $f(a) = f(b)$, by the contrapositive
+\end{tcolorbox}
+Whenever we talk about \textit{one-one} functions, we want to note that whenever have distinct inputs, they should have distinct images as well.
+Sometimes textbooks or professors will refer to the name \textit{injective} instead.\\
+
+There is also another property that functions can exhibit
+
+\begin{tcolorbox}[colback=definition!65]
+    A function is said to be $onto$ if for all $y \in Y$ there is a $x \in X$ so that, f(x) = y
+\end{tcolorbox}
+Whenever we talk about \textit{onto} functions, we want to note there will always be some input for each image. Sometimes textbooks or professors will refer to the name \textit{surjective} instead. \\
+
+Here is some good notation to follow along with the rest of this section when we're taking about "images" and "pre-images"
+
+\begin{tcolorbox}[colback=definition!65]
+    Let $A \subseteq X$ and $B \subseteq Y$.
+    The \textit{image} of A is $f(A)$ = \{$f(a) \mid a \in A $\} and the \textit{preimage} of B is $f^{-1}(B)$ = \{$x \in X \mid f(x) \in B$\}
+\end{tcolorbox}
+
+These are defintions that will continously use throughout the remainder of the course, so its good idea to get familiar with them. Eventually there will be problems where we'll have to determine \textit{images} of \textit{unions} or \textit{intersections}, and with these definitions, we'll be able to get thru them.
+
+\newpage
+
+\section*{Basis (for a topology)}
+How can we create topologies on a set $X$?
+
+\begin{tcolorbox}[colback=definition!65]
+   \begin{definition*}
+      A Basis for a topology on a set $X$ is a collection of subsets of $X$ so that the following hold:
+      \begin{enumerate}
+        \item[(i)] For all $x \in X$, $x \in B$, for some $B \in \B$
+        \item[(ii)] If $B_1, B_2 \in \B$ and $x \in B_1 \cap B_2$ then there is some $B_3 \in \B$ so that $x \in B_3 \subseteq B_1 \cap \B_2$
+      \end{enumerate}
+   \end{definition*} 
+\end{tcolorbox}
+
+\vspace{2mm}
+Here are a few examples to show that we have a basis for a topology
+
+\begin{tcolorbox}[colback=example!65]
+    \begin{example*}
+       Let $X$ = any set and $\B = \{\{x\} \mid x \in X\}$. Show that $\B$ is a basis that generates the discrete topology on $X$ 
+    \end{example*}
+    \textbf{Proof.} We need to first show that there is at least one point in $X$
+    Suppose $U \subseteq X$ is open. Take $x \in U$. Note that $x \in \{x\} \subseteq U$ \\
+
+    Now we need to show that if we take an intersection of two sets that are in $\B$, it is equivalent to $\{x\}$
+    Suppose $x \in \{x_1\} \cap \{x_2\}$ with $\{x_1\}, \{x_2\} \in \B$. Then, $x_1 = x_2 \implies x$. So, $x \in \{X\} \subseteq \{x_1\} \cap \{x_2\}$ \qed
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=nonex!67]
+\begin{nonex*}
+   Let $X = \{a,b,c\}$ and $\B =\{\{a\},\{c\},\{a,b\},\{b,c\}\}$ Is $\B$ the basis for a topology on $X$?
+\end{nonex*}
+
+\textbf{Proof.} We need to show that $\B$ doesn't satisfy at least one of the properties of a basis. \\
+
+Take $b \in \{a,b\} \cap \{b,c\} \implies \{b\}$. Notice, however, $\{b\} \notin \B$, so there is no $B \in \B$ so that $b \in \B \subseteq \{a,b\} \cap \{b,c\}$. Thus, $\B$ is not a basis on $X$ \qed
+ 
+\end{tcolorbox}
+
+\newpage
+\section*{Subspace Topology}
+We will now construct new spaces from old ones by taking subspaces
+\begin{tcolorbox}[colback=definition!65]
+    \begin{definition*}
+    Suppose $X$ has the topology $\mathcal{T}$ and let $Y \subseteq X$. The \textbf{subspace topology} is
+    \[
+    \mathcal{T}_Y = \{U \cap Y \mid U \in \mathcal{T}\}
+    \]
+    i.e. $V \subseteq Y$ open $\Longleftrightarrow V = U \cap Y, U \subseteq X$ open
+    \end{definition*}
+\end{tcolorbox}
+
+We'll take a look at a few examples to help us construct an idea for this topology. \\
+
+First, let's look at a definition that will help us better understand this idea.
+
+\begin{tcolorbox}[colback=definition!65]
+    \begin{definition*}
+        Let $X$ be a set a set and let $A$ be a subset of $X$, $A \subseteq X$. Notice there is a function that is one-to-one:
+        \[
+        i: A \rightarrow X
+        \]
+        This is called the \textbf{inclusion} function, where every element of $A$ is an element of $X$. We denote this using the following notation
+        \[
+        i(a) = a \in X
+        \]
+    \end{definition*}
+\end{tcolorbox}
+Essentially, an inclusion map is kind of a special and cooler way to say that any element in $A$ is also an element in $X$ \\
+
+In some other references or textbooks, authors will tend to use a hooked arrow $\hookrightarrow$ to indicate this special mapping
+
+\begin{tcolorbox}[colback=example!65]
+    \begin{example*}
+       Let $\mathbb{Z} \subseteq \mathbb{R}.$ There's an inclusion function 
+       \[
+       i: \mathbb{Z} \rightarrow \mathbb{R}
+       \]
+       where,
+       \[
+       i(k) = k \in \mathbb{R}
+       \]
+    \end{example*}
+\end{tcolorbox}
+
+\newpage
+Now lets take a look at this claim and show that it's true
+\begin{tcolorbox}[colback=claim!65]
+    \begin{claim*}
+    There is a unique coarsest topology on $A$ so that
+    \[
+    i: A \rightarrow X
+    \]
+    is continuous.
+    \end{claim*}
+    \textbf{Proof.} If $U$ is open in $X$ and $i$ is continuous, then $i^{-1}(U)$ is open in $A$. By definition
+    \[
+    i^{-1}(u) = \{a \in A \mid i(a) \in U\}
+    \]
+    Which indicates that 
+    \[
+    a \in U = A \cap U 
+    \qed
+    \]
+\end{tcolorbox}
+
+So, for $i$ to be continuous, we declare $V$ to be open in $A$ \textit{if and only if} $V = A \cap U$, for some open set $U$ in $X$, which is the \textit{\textbf{subspace topology}} on $A$ we had initially defined earlier
+
+\begin{tcolorbox}[colback=prop!65]
+    \begin{prop*}
+    If $X$ has a topology $\mathcal{T}_X$, where $A \subseteq X$ then
+    \[
+    \mathcal{T}_A = \{V \mid V = A \cap U, \text{ for some $U$ open in $X$}\}
+    \]
+    is a topology on $A$
+    \end{prop*}
+    \textbf{Proof.} First, show that $\emptyset$, $A \in \mathcal T_A$
+    \[
+    \emptyset = A \cap \emptyset, \text{ where }\emptyset \in \mathcal{T_x}
+    \]
+    \[
+    A = A \cap X, \text{ where } X \in \mathcal{T}_X
+    \]
+    Now, we need to show that $T_A$ is closed under unions
+    \[
+    \text{If } V_\alpha \in \mathcal{T}_\alpha, \text{ where } V_\alpha = A \cap U_\alpha \text{ then,}
+    \] 
+    \[
+    \bigcup_{\alpha \in I} V_\alpha = \bigcup_{\alpha \in I} (A \cap U_\alpha) = A \cap (\bigcup_{\alpha \in I}U_\alpha) \in \mathcal{T}_A
+    \]
+    Finally, intersections are similar
+    \[
+    \bigcap^{n}_{i=1}V_i = \bigcap^{n}_{i=1}(A \cap U_i) = A \cap (\bigcap^{n}_{i=1}U_i) 
+    \qed
+    \]
+\end{tcolorbox}
+
+\newpage
+\section*{Connectedness}
+
+\begin{tcolorbox}[colback=definition!65]
+    \begin{definition*}
+        A topological space $X$ is called \textbf{disconnected} if $A, B \neq \emptyset \subseteq X$ (open and nonempty) so that we can write $X$ as $X = A \cup B$ where $A\cap B = \emptyset$ (disjoint)
+    \end{definition*}
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=example!65]
+    \begin{example*}
+       Let $X = (1, 2] \cup (3,4) \subseteq \mathbb{R}$ (with the subspace topology). Then $X$ is disconnected.
+    \end{example*}
+    
+    \textbf{Proof.} Take $A = (1,2]$ and $B = (3,4)$. Then it's clear that $A, B$ are open, nonempty, and disjoint. \qed
+\end{tcolorbox}
+
+Whenever we want to show that any set $X$ is connected, we want to argue that $X$ can't be disconnected in the first place, otherwise we will conclude a contradiction!
+
+Equivalently, If $X = A \cup B$ with $A, B$ open then either $A = \emptyset$, $B = \emptyset$ or $A \cap B = \emptyset$ (they overlap)
+
+\begin{tcolorbox}[colback=theorem!75]
+    \begin{theorem*}
+        $\mathbb{R}$ and all intervals $(a, b), [a, b), (a,b], [a,b]$ are connected
+    \end{theorem*}
+\end{tcolorbox}
+
+Eventually we will show the proof for this theorem, but for now just keep in mind that this theorem exists and is true.
+\vspace{2mm}
+
+Lets take a look at some interesting cases of connectedness in $\mathbb{R}$
+
+\begin{tcolorbox}[colback=example!65]
+    \begin{example*}
+       Let $\mathbb{R} = (-\infty, 0] \cup (0, \infty)$
+        
+        The half-opened interval $(-\infty, 0]$ is not open and the open interval $(0, \infty)$ is open.
+        \vspace{2mm}
+    \end{example*}
+    \begin{example*}
+        Let $\mathbb{R} = (-\infty, 1 ) \cup (-1, \infty)$ 
+        
+        Notice how $\mathbb{R}$ is being expressed as a union of two open sets, however, they are not \textbf{disjoint}.
+        \vspace{2mm}
+
+        These two cases don't really tell us anything about being connected, in fact they're not at all disconnected.
+    \end{example*}
+\end{tcolorbox}
+
+\newpage
+
+Now we will talk about connected spaces amongst functions
+\begin{tcolorbox}[colback=theorem!75]
+    \begin{theorem*}
+       If $f: X \rightarrow Y$  is continuous and $X$ is connected, then $f(x)$ is connected (The image of a connected space under a continuous function is connected)
+       \vspace{2mm}
+    \end{theorem*}   
+    \textbf{Proof.} By the contrapositive, we want to show that if $f(X)$ is disconnected, then $X$ is disconnnected
+    \vspace{2mm}
+    
+    If $f(X)$ is disconnected with $f(X) = A \cup B$, where $A,B$ are open in $f(X)$, $A,B$ nonempty and disjoint. Then $A = f(X) \cap U$, $U$ open in $Y$ and $B = f(X) \cap V$, $V$ open in $Y$.
+    \vspace{2mm} 
+    
+    Take the pre-image, $f^{-1}(f(X)) = f^{-1}(A \cup B)$.
+    $X = f^{-1}(A) \cup f^{-1}(B)$ (Both of these sets are open in $X$ since $f$ is continuous by definition) 
+\end{tcolorbox}
+\end{document}
